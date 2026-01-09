@@ -4,6 +4,7 @@ import os
 import shutil
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Callable
 
 from .log import MoveRecord, write_sort_log, read_sort_log
 from .rules import RuleSet, DEFAULT_RULES
@@ -93,11 +94,20 @@ def build_move_plan(root: Path, options: SortOptions) -> list[MovePlanItem]:
     return items
 
 
-def apply_move_plan(root: Path, plan: list[MovePlanItem], log_path: Path) -> list[MoveRecord]:
+def apply_move_plan(
+    root: Path,
+    plan: list[MovePlanItem],
+    log_path: Path,
+    on_progress: Callable[[int, int, MovePlanItem], None] | None = None,
+) -> list[MoveRecord]:
     root = root.resolve()
     records: list[MoveRecord] = []
+    total = len(plan)
 
-    for item in plan:
+    for idx, item in enumerate(plan, start=1):
+        if on_progress:
+            on_progress(idx, total, item)
+
         src = item.src.resolve()
 
         dst_dir = (root / item.category).resolve()

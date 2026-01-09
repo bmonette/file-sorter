@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 from dataclasses import dataclass, asdict
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 
@@ -21,7 +21,7 @@ class SortLog:
 
 def write_sort_log(log_path: Path, root: Path, records: list[MoveRecord]) -> None:
     payload = SortLog(
-        created_utc=datetime.utcnow().isoformat(timespec="seconds") + "Z",
+        created_utc=datetime.now(timezone.utc).isoformat(timespec="seconds"),
         root=str(root),
         records=records,
     )

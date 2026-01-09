@@ -6,9 +6,6 @@ from pathlib import Path
 
 @dataclass(frozen=True)
 class RuleSet:
-    """
-    category -> set of extensions (lowercase, including leading dot).
-    """
     categories: dict[str, set[str]]
     default_category: str = "Other"
 
@@ -25,16 +22,10 @@ DEFAULT_RULES = RuleSet(
         "Images": {".jpg", ".jpeg", ".png", ".gif", ".webp", ".bmp", ".tiff", ".tif", ".heic", ".svg"},
         "Videos": {".mp4", ".mkv", ".mov", ".avi", ".wmv", ".webm", ".m4v"},
         "Audio": {".mp3", ".wav", ".flac", ".aac", ".m4a", ".ogg", ".wma"},
-        "Documents": {
-            ".pdf", ".doc", ".docx", ".txt", ".rtf", ".md",
-            ".xls", ".xlsx", ".csv",
-            ".ppt", ".pptx",
-        },
+        "Spreadsheets": {".xls", ".xlsx", ".csv"},
+        "Documents": {".pdf", ".doc", ".docx", ".txt", ".rtf", ".md", ".ppt", ".pptx"},
         "Archives": {".zip", ".rar", ".7z", ".tar", ".gz", ".bz2"},
-        "Code": {
-            ".py", ".js", ".ts", ".html", ".css", ".json", ".xml", ".yml", ".yaml",
-            ".sql", ".php", ".cs", ".cpp", ".c", ".h", ".java",
-        },
+        "Code": {".py", ".js", ".ts", ".html", ".css", ".json", ".xml", ".yml", ".yaml", ".sql", ".php", ".cs", ".cpp", ".c", ".h", ".java"},
     },
     default_category="Other",
 )
